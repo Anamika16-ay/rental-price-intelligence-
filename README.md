@@ -1,3 +1,26 @@
+# Smart Rental Price Intelligence
+
+ML-powered platform that predicts fair market rent, shows comparable listings,
+tracks rent trends, and flags over/under-priced listings.
+
+**Live Demo:** https://rental-price-intelligence-frontend.onrender.com
+**Backend API:** https://rental-price-intelligence.onrender.com/api/health
+
+> Note: the backend runs on a free plan and sleeps after inactivity.
+> The first request may take up to 50 seconds to wake it up.
+
+## Tech Stack
+MongoDB, Express, React (Vite), Node.js, Leaflet, Recharts
+
+## Features
+- Fair-rent prediction with 90% confidence range
+- Explainable "why this price" breakdown
+- Comparable listings (geospatial + similarity search)
+- Rent trend charts by city
+- Pricing alerts for over/under-priced listings
+
+
+
 # Smart Rental Price Intelligence (MERN Stack)
 
 A full-stack rental price intelligence platform: predicts fair market rent, surfaces
@@ -119,3 +142,10 @@ from `/api/predict/train`). Target: prediction MAPE within 8–10% on synthetic/
 - Add authentication (JWT) for listing management endpoints.
 - Add drift monitoring by logging prediction vs. actual outcomes over time.
 - Replace synthetic seed data with a real listings ingestion pipeline (scraper or API).
+
+
+
+
+
+
+
