@@ -2,13 +2,35 @@ const express = require("express");
 const router = express.Router();
 const Listing = require("../models/Listing");
 
-// GET /api/listings?city=Lucknow&limit=20
+// GET /api/listings?city=Lucknow&limit=20&page=1&minPrice=20000&maxPrice=50000&bedrooms=2&sortBy=listedPrice&sortOrder=asc
 router.get("/", async (req, res) => {
   try {
-    const { city, limit = 20, page = 1 } = req.query;
-    const filter = city ? { city } : {};
+    const {
+      city,
+      limit = 20,
+      page = 1,
+      minPrice,
+      maxPrice,
+      bedrooms,
+      sortBy = "listedDate",
+      sortOrder = "desc",
+    } = req.query;
+
+    const filter = {};
+    if (city) filter.city = city;
+    if (bedrooms) filter.bedrooms = Number(bedrooms);
+    if (minPrice || maxPrice) {
+      filter.listedPrice = {};
+      if (minPrice) filter.listedPrice.$gte = Number(minPrice);
+      if (maxPrice) filter.listedPrice.$lte = Number(maxPrice);
+    }
+
+    const allowedSortFields = ["listedPrice", "listedDate", "sqft", "bedrooms"];
+    const sortField = allowedSortFields.includes(sortBy) ? sortBy : "listedDate";
+    const sortDirection = sortOrder === "asc" ? 1 : -1;
+
     const listings = await Listing.find(filter)
-      .sort({ listedDate: -1 })
+      .sort({ [sortField]: sortDirection })
       .limit(Number(limit))
       .skip((Number(page) - 1) * Number(limit));
 
